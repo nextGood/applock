@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="appLock.dao.PublckrecMapper">
+	<resultMap id="BaseResultMap" type="appLock.model.Publckrec">
+		<id column="RecKey" property="reckey" jdbcType="VARCHAR" />
+		<result column="LckTim" property="lcktim" jdbcType="VARCHAR" />
+		<result column="TimOut" property="timout" jdbcType="VARCHAR" />
+		<result column="UpdFlg" property="updflg" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		RecKey, LckTim, TimOut, UpdFlg
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from publckrec
+		where RecKey = #{reckey,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from publckrec
+		where RecKey = #{reckey,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="appLock.model.Publckrec">
+		insert into publckrec (RecKey, LckTim, TimOut,
+		UpdFlg)
+		values (#{reckey,jdbcType=VARCHAR}, #{lcktim,jdbcType=VARCHAR},
+		#{timout,jdbcType=VARCHAR},
+		#{updflg,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="appLock.model.Publckrec">
+		insert into publckrec
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="reckey != null">
+				RecKey,
+			</if>
+			<if test="lcktim != null">
+				LckTim,
+			</if>
+			<if test="timout != null">
+				TimOut,
+			</if>
+			<if test="updflg != null">
+				UpdFlg,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="reckey != null">
+				#{reckey,jdbcType=VARCHAR},
+			</if>
+			<if test="lcktim != null">
+				#{lcktim,jdbcType=VARCHAR},
+			</if>
+			<if test="timout != null">
+				#{timout,jdbcType=VARCHAR},
+			</if>
+			<if test="updflg != null">
+				#{updflg,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="appLock.model.Publckrec">
+		update publckrec
+		<set>
+			<if test="lcktim != null">
+				LckTim = #{lcktim,jdbcType=VARCHAR},
+			</if>
+			<if test="timout != null">
+				TimOut = #{timout,jdbcType=VARCHAR},
+			</if>
+			<if test="updflg != null">
+				UpdFlg = #{updflg,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where RecKey = #{reckey,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="appLock.model.Publckrec">
+		update publckrec
+		set LckTim = #{lcktim,jdbcType=VARCHAR},
+		TimOut = #{timout,jdbcType=VARCHAR},
+		UpdFlg = #{updflg,jdbcType=VARCHAR}
+		where RecKey = #{reckey,jdbcType=VARCHAR}
+	</update>
+</mapper>
